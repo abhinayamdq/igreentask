@@ -6,16 +6,14 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:provider/provider.dart';
 import '../Api/Api connet.dart';
 import '../AppSnackBar.dart';
-import '../app/app_exception.dart';
 import '../pojo/TaskList.dart';
-import '../provider/Data provider.dart';
+
 
 class TaskProjectListController extends GetxController {
-  RxBool initialLoading = RxBool(true);
-  // late DataProvider userDataProvider;
   final ApiConnect _connect = Get.put(ApiConnect());
-  RxString startDate = RxString("");
+  RxBool initialLoading = RxBool(true);
   RxBool isGet = RxBool(false);
+  RxString startDate = RxString("");
   RxString endDate = RxString("");
   RxString description = RxString("");
   RxString taskName = RxString("");
@@ -28,8 +26,9 @@ class TaskProjectListController extends GetxController {
 
   Future<void> getTaskList() async {
     var response = await _connect.taskListConnect();
-      if (!response.error!) {
-        this.data=response.data;
+    print('loose');
+    if (!response.error!) {
+      this.data=response.data;
         initialLoading.value = false;
         startDate.value = response.data![0].startdate!;
         endDate.value = response.data![0].enddate!;

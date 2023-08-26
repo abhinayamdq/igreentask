@@ -21,9 +21,9 @@ class TaskProjectList extends GetView<TaskProjectListController> {
     // controller.userDataProvider =
     //     Provider.of<DataProvider>(context, listen: false);
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      if(!controller.isGet.value){
+      if (!controller.isGet.value) {
         controller.getTaskList();
-        controller.isGet.value=true;
+        controller.isGet.value = true;
       }
     });
 

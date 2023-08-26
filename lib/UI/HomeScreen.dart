@@ -7,6 +7,7 @@ import 'package:igreen_taskapprovel/Project.dart';
 import 'package:igreen_taskapprovel/roots/App%20roots.dart';
 
 import '../Colors.dart';
+import 'TaskAssigned.dart';
 import 'TaskProjectList.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -107,7 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20)),
                         child: InkWell(
                           onTap: () {
-                            Get.toNamed(AppRoutes.Approvel.toName);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>TaskAssigned()),
+                            );
                           },
                           child: Center(
                             child: Column(

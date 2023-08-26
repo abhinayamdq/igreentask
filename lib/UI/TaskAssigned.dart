@@ -30,7 +30,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
           );
         });
     if (picked != null) {
-      controller.projectdatecontroller.text =
+      controller.ProjectdateController.text =
           DateFormat('yyyy-MM-dd').format(picked);
     }
   }
@@ -51,7 +51,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
           );
         });
     if (picked != null) {
-      controller.completiondatecontroler.text =
+      controller.CompletiondateController.text =
           DateFormat('yyyy-MM-dd').format(picked);
     }
   }
@@ -72,7 +72,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
           );
         });
     if (picked != null) {
-      controller.deadlinecontroler.text =
+      controller.DeadlineController.text =
           DateFormat('yyyy-MM-dd').format(picked);
     }
   }
@@ -82,12 +82,12 @@ class TaskAssigned extends GetView<TaskAssignedController> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: CustomColors.lightviolet,
+          backgroundColor: Color(0xff84cb25),
           toolbarHeight: 60,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new,
-                color: Colors.black, // customize color as per requirement
+                color: Colors.white, // customize color as per requirement
               ),
               onPressed: () {
                 Navigator.push(
@@ -97,7 +97,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
               }),
           title: Text("Task List",
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               )),
@@ -110,6 +110,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TextField(
+                      controller: controller.TaskNameController,
                       decoration: InputDecoration(
                         labelText: "Task Name",
                         border: OutlineInputBorder(),
@@ -123,6 +124,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       height: 15,
                     ),
                     TextField(
+                      controller: controller.TaskCodeController,
                       decoration: InputDecoration(
                         labelText: "Task code",
                         border: OutlineInputBorder(),
@@ -137,7 +139,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                     ),
 
                     TextFormField(
-                      controller: controller.projectdatecontroller,
+                      controller: controller.ProjectdateController,
                       style: TextStyle(color: Colors.black),
                       readOnly: true,
                       decoration: InputDecoration(
@@ -159,7 +161,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       height: 15,
                     ),
                     TextFormField(
-                      controller: controller.completiondatecontroler,
+                      controller: controller.CompletiondateController,
                       style: TextStyle(color: Colors.black),
                       readOnly: true,
                       decoration: InputDecoration(
@@ -181,7 +183,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       height: 15,
                     ),
                     TextFormField(
-                      controller: controller.deadlinecontroler,
+                      controller: controller.DeadlineController,
                   style: TextStyle(color: Colors.black),
                   readOnly: true,
                   decoration: InputDecoration(
@@ -202,35 +204,35 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                     SizedBox(
                       height: 15,
                     ),
-                    DropdownButtonFormField<String>(
-                      //value: _selectedOption2,
-                      isExpanded: true,
-                      items: <String>['1452', '125']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        newValue!;
-                        controller.Typecontroller.text = newValue;
-                      },
-                      decoration: const InputDecoration(
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15),
-                        hintText: 'Task Type',
-                        labelText: 'Task Type',
-                        labelStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey,
+                    Obx(() => InkWell(onTap: (){controller.resourcesDrop();},
+                      child: DropdownButtonFormField<String>(
+                        // value: controller.userProfileType.value,
+                        isExpanded: true,
+                        items: controller.EmployeeList.map((value){
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          newValue!;
+                          controller.SelectIndex.value =
+                              controller.EmployeeList.value.indexOf(newValue);
+                          controller.EmployeeListController.text = newValue;
+                        },
+                        decoration: InputDecoration(
+                          contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15),
+                          hintText: 'Task Type',
+                          labelText: 'Task Type',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
                         ),
-                        border: OutlineInputBorder(),
                       ),
-                    ),
+                    )),
                     SizedBox(
                       height: 15,
                     ),
@@ -249,7 +251,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       }).toList(),
                       onChanged: (String? newValue) {
                         newValue!;
-                        controller.Typecontroller.text = newValue;
+                        controller.DepartmentController.text = newValue;
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -281,7 +283,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       }).toList(),
                       onChanged: (String? newValue) {
                         newValue!;
-                        controller.Typecontroller.text = newValue;
+                        controller.DepartmentController.text = newValue;
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -299,6 +301,7 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       height: 15,
                     ),
                     TextFormField(
+                      controller: controller.DescriptionController,
                       decoration: InputDecoration(
                         labelText: 'Project Description',
                         labelStyle: TextStyle(
@@ -315,13 +318,10 @@ class TaskAssigned extends GetView<TaskAssignedController> {
                       child: Button(
                           widthFactor: 0.8,
                           heightFactor: 0.06,
-                          // onPressed: () {
-                          //   controller.();
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => HomeScreen()),
-                          //   );
-                          // },
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            controller.textFieldValidation();
+                          },
                           child: const Text("Sumbit",
                               style: TextStyle(
                                   fontSize: 18,

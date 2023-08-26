@@ -8,14 +8,14 @@ enum Method { POST, GET, PUT, DELETE, PATCH }
 const bool isProductionUrl = true;
 
 const String BASE_URL = isProductionUrl
-    ? "https://mdqualityapps.in/API/igreen_cms/development/"
-    : "https://mdqualityapps.in/API/igreen_cms/development/";
+    ? "https://mdqualityapps.in/API/igreen_cms/UAT/"
+    : "https://mdqualityapps.in/API/igreen_cms/UAT/";
 
 class HttpService {
   Map<String, String> headers = {"Content-Type": "application/json"};
   late Dio _dio;
 
-  Future<HttpService> init({bool enableAuth = true}) async {
+  Future<HttpService>  init({bool enableAuth = true}) async {
     // if (enableAuth) {
     //   String basicAuth = 'Bearer ${ApiUrl.login_token}';
     //   headers['Authorization'] = basicAuth;
@@ -60,7 +60,8 @@ class HttpService {
           loadingWidget: loadingWidget());
     } else if (method == Method.GET) {
       response = await GetX.Get.showOverlay(
-          asyncFunction: () => _dio.get(url), loadingWidget: loadingWidget());
+          asyncFunction: () => _dio.get(url),
+          loadingWidget: loadingWidget());
     } else if (method == Method.PUT) {
       response = await GetX.Get.showOverlay(
           asyncFunction: () => _dio.put(url, data: params),
